@@ -25,6 +25,10 @@ public:
 	Vector3D<double> getPos();
 	void setMass(double A);
 
+	void Update();
+	void Print();
+	void PrintHeader();
+
 
 private:
 
@@ -33,6 +37,7 @@ private:
 	double massInKg;
 
 	static long number;
+	static double time;
 	long index;
 
 	static std::vector<Object*> AllObjects;
