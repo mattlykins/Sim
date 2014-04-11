@@ -18,7 +18,9 @@ public:
 	T x();
 	void x(const T &A);
 	T y();
+	void y(const T &A);
 	T z();
+	void z(const T &A);
 private:
 	T xVar;
 	T yVar;
@@ -33,6 +35,16 @@ T Vector3D<T>::x(){
 template<class T>
 void Vector3D<T>::x(const T &A){
 	this->xVar = A;
+}
+
+template<class T>
+void Vector3D<T>::y(const T &A){
+	this->yVar = A;
+}
+
+template<class T>
+void Vector3D<T>::z(const T &A){
+	this->zVar = A;
 }
 
 template<class T>

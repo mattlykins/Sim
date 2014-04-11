@@ -23,6 +23,16 @@ Object::~Object(){
 
 }
 
+void Object::CalcGravity(Object &A){
+	//Find R2-R1
+	Vector3D<double> R21 = A.pos - this->pos;
+	Vector3D<double> uR21 = R21/R21.length();
+
+	double forceMultiplier = G*A.massInKg*this->massInKg/pow(R21.length(),2);
+
+	this->force = uR21*forceMultiplier;
+}
+
 void Object::UpdateAcc(){
 	acc = force/massInKg;
 }
@@ -37,11 +47,11 @@ Vector3D<double> Object::getAcc(){
 	return acc;
 }
 
-Vector3D<double> Object::getVel(){
+Vector3D<double>& Object::getVel(){
 	return vel;
 }
 
-Vector3D<double> Object::getPos(){
+Vector3D<double>& Object::getPos(){
 	return pos;
 }
 
@@ -57,6 +67,7 @@ void Object::Update(){
 }
 
 void Object::Print(){
+	std::cout << index << "\t";
 	std::cout << time << "\t";
 	std::cout << pos.x() << "\t" << pos.y() << "\t" << pos.z() << "\t";
 	std::cout << vel.x() << "\t" << vel.y() << "\t" << vel.z() << "\t";
@@ -65,7 +76,7 @@ void Object::Print(){
 	std::cout << std::endl;
 }
 void Object::PrintHeader(){
-	std::cout << "TIME(s)\tx(m)\ty(m)\tz(m)\tv_x(m/s)\tv_y(m/s)\tv_z(m/s)\ta_x(m/s/s)\ta_y(m/s/s)\ta_z(m/s/s)\tF_x(N)\tF_y(N)\tF_z(N)\n";
+	std::cout << "INDEX\tTIME(s)\tx(m)\ty(m)\tz(m)\tv_x(m/s)\tv_y(m/s)\tv_z(m/s)\ta_x(m/s/s)\ta_y(m/s/s)\ta_z(m/s/s)\tF_x(N)\tF_y(N)\tF_z(N)\n";
 
 }
 

@@ -13,16 +13,18 @@ public:
 	Object();
 	~Object();
 
+	void CalcGravity(Object &A);
+
 	void UpdateAcc();
 	void UpdateVel();
 	void UpdatePos();
 
 	Vector3D<double> force;
-
 	Vector3D<double> getForce();
 	Vector3D<double> getAcc();
-	Vector3D<double> getVel();
-	Vector3D<double> getPos();
+	Vector3D<double>& getVel();
+	Vector3D<double>& getPos();
+
 	void setMass(double A);
 
 	void Update();
