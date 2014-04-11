@@ -8,51 +8,102 @@ class Vector3D {
 public:
 	Vector3D();
 	Vector3D(T,T,T);
-	T operator*(const T &other);
-	Vector3D<T> operator-(const T &other);
+	Vector3D<T> operator-(const Vector3D<T> &other);
+	Vector3D<T> operator+(const Vector3D<T> &other);
+	Vector3D<T> operator*(const T &A);
+	Vector3D<T> operator/(const T &A);
 	void InSpherical(T &R, T &Theta, T &Phi);
 	inline T length();
+
+	T x();
+	void x(const T &A);
+	T y();
+	T z();
 private:
-	T x;
-	T y;
-	T z;
+	T xVar;
+	T yVar;
+	T zVar;
 };
 
 template<class T>
+T Vector3D<T>::x(){
+	return xVar;
+}
+
+template<class T>
+void Vector3D<T>::x(const T &A){
+	this->xVar = A;
+}
+
+template<class T>
+T Vector3D<T>::y(){
+	return yVar;
+}
+
+template<class T>
+T Vector3D<T>::z(){
+	return zVar;
+}
+
+template<class T>
 Vector3D<T>::Vector3D(){
-	x = 0;
-	y = 0;
-	z = 0;
+	xVar = 0;
+	yVar = 0;
+	zVar = 0;
 }
 
 template <class T>
-Vector3D<T>::Vector3D(T xIn,T yIn,T zIn): x(xIn),y(yIn),z(zIn){
+Vector3D<T>::Vector3D(T xIn,T yIn,T zIn): xVar(xIn),yVar(yIn),zVar(zIn){
 }
 
 template<class T>
-T Vector3D<T>::operator*(const T & other){
-	return other.x*x + other.y*y + other.z*z;
-}
-
-template<class T>
-Vector3D<T> Vector3D<T>::operator-(const T &other){
+Vector3D<T> Vector3D<T>::operator-(const Vector3D<T> &other){
 	Vector3D<T> result;
-	result.x = x - other.x;
-	result.y = y - other.y;
-	result.z = z - other.z;
+	result.xVar = xVar - other.xVar;
+	result.yVar = yVar - other.yVar;
+	result.zVar = zVar - other.zVar;
+	return result;
+}
+
+template<class T>
+Vector3D<T> Vector3D<T>::operator+(const Vector3D<T> &other){
+	Vector3D<T> result;
+	result.xVar = xVar + other.xVar;
+	result.yVar = yVar + other.yVar;
+	result.zVar = zVar + other.zVar;
+	return result;
+}
+
+template<class T>
+Vector3D<T> Vector3D<T>::operator*(const T &A){
+	Vector3D<T> result;
+	result.xVar = this->xVar * A;
+	result.yVar = this->yVar * A;
+	result.zVar = this->zVar * A;
+	return result;
+}
+
+template<class T>
+Vector3D<T> Vector3D<T>::operator/(const T &A){
+	Vector3D<T> result;
+
+	//Check if A != 0
+	result.xVar = this->xVar / A;
+	result.yVar = this->yVar / A;
+	result.zVar = this->zVar / A;
 	return result;
 }
 
 template<class T>
 inline T Vector3D<T>::length(){
-	return pow(pow(x,2) + pow(y,2) + pow(z,2),0.5);
+	return pow(pow(xVar,2) + pow(yVar,2) + pow(zVar,2),0.5);
 }
 
 template<class T>
 void Vector3D<T>::InSpherical(T &R, T &Theta, T &Phi){
-	R = pow(pow(x,2) + pow(y,2) + pow(z,2),0.5);
-	Theta = acos(z/R);
-	Phi = atan(y/x);
+	R = pow(pow(xVar,2) + pow(yVar,2) + pow(zVar,2),0.5);
+	Theta = atan2(pow(pow(xVar,2) + pow(yVar,2),0.5),zVar);
+	Phi = atan(yVar/xVar);
 }
 
 
