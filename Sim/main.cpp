@@ -11,12 +11,12 @@ int main(){
 	Object B;
 
 	A.setMass(1.0);
-	A.getVel().x(0.5);
+	A.getVel().x(1.0);
 	B.setMass(1.0);
 
 	B.getPos().x(5);
 
-	B.getVel().y(0.25);
+	B.getVel().y(0.60);
 
 
 
@@ -26,9 +26,6 @@ int main(){
 	B.Print();
 
 	for( int i = 0; i < 10; ++i){
-
-		A.CalcGravity(B);
-		B.CalcGravity(A);
 		A.Update();
 		B.Update();
 		A.Print();

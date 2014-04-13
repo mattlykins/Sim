@@ -9,6 +9,7 @@ long Object::number = 0;
 double Object::time = 0.;
 std::vector<Object*> Object::AllObjects;
 
+
 Object::Object(){
 		index = number;
 		++number;
@@ -23,14 +24,27 @@ Object::~Object(){
 
 }
 
-void Object::CalcGravity(Object &A){
+Vector3D<double> Object::CalcGravity(Object &A){
 	//Find R2-R1
 	Vector3D<double> R21 = A.pos - this->pos;
 	Vector3D<double> uR21 = R21/R21.length();
 
+	//Protect against div by zero
 	double forceMultiplier = G*A.massInKg*this->massInKg/pow(R21.length(),2);
 
-	this->force = uR21*forceMultiplier;
+	return uR21*forceMultiplier;
+}
+
+void Object::GetNetForce(){
+	std::vector<Object*>::iterator it;
+
+	ZeroForce();
+
+	for( it = AllObjects.begin(); it != AllObjects.end(); ++it ){
+		if( *it != this ){
+			force = force + CalcGravity(**it);
+		}
+	}
 }
 
 void Object::UpdateAcc(){
@@ -59,7 +73,14 @@ void Object::setMass(double A){
 	massInKg = A;
 }
 
+void Object::ZeroForce(){
+	force.x(0);
+	force.y(0);
+	force.z(0);
+}
+
 void Object::Update(){
+	GetNetForce();
 	UpdateAcc();
 	UpdatePos();
 	UpdateVel();

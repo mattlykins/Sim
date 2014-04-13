@@ -13,17 +13,22 @@ public:
 	Object();
 	~Object();
 
-	void CalcGravity(Object &A);
+	Vector3D<double> CalcGravity(Object &A);
+	void GetNetForce();
 
 	void UpdateAcc();
 	void UpdateVel();
 	void UpdatePos();
 
-	Vector3D<double> force;
+	void ZeroForce();
+
+
 	Vector3D<double> getForce();
 	Vector3D<double> getAcc();
 	Vector3D<double>& getVel();
 	Vector3D<double>& getPos();
+
+
 
 	void setMass(double A);
 
@@ -34,7 +39,7 @@ public:
 
 private:
 
-	Vector3D<double> pos,vel,acc;
+	Vector3D<double> pos,vel,acc,force;
 
 	double massInKg;
 
@@ -43,7 +48,6 @@ private:
 	long index;
 
 	static std::vector<Object*> AllObjects;
-
 };
 
 #endif /* OBJECT_H_ */
